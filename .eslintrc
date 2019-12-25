@@ -23,7 +23,6 @@
     "react/state-in-constructor": ["off"],
     "jsx-a11y/href-no-hash": ["off"],
 		"react/jsx-props-no-spreading": ["off"],
-		"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "curly": "error"
   },
   "settings": {
