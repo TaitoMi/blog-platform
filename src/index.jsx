@@ -7,7 +7,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import allReducers from './reducers/reducers';
 
-const store = createStore(allReducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()); // eslint-disable-line
+const store = createStore(
+  allReducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()); // eslint-disable-line
 
 ReactDOM.render(
   <Provider store={store}>
