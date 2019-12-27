@@ -29,6 +29,7 @@
     position: relative;
     margin: 10px 0;
     align-items: center;
+    justify-content: center;
   }
   &__input {
     width: 370px;
@@ -43,4 +44,14 @@
   &__submit-btn {
     margin-right: 10px;
   }
+}
+
+.input__error {
+  color: red;
+  font-size: 15px;
+  text-align: right;
+}
+
+.has-error {
+  border: 1px solid red;
 }

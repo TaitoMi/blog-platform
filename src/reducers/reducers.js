@@ -4,18 +4,17 @@ const initialState = {
   email: '',
   username: '',
   password: '',
+  isRegSuccessful: '',
+  error: null,
 };
 
 const userForm = (state = initialState, action) => {
-  const newState = state;
+  const { payload } = action;
   switch (action.type) {
-    case 'EMAIL_INPUT':
-      newState.email = action.payload.text;
-      console.log(typeof newState.email);
-      return newState;
-    case 'USERNAME_INPUT':
-      newState.username = action.payload.text;
-      return newState;
+    case 'USER_REGISTERED':
+      return { ...state, isRegSuccessful: payload.reg };
+    case 'REG_ERROR':
+      return { ...state, error: payload.error };
     default:
       return state;
   }

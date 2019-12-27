@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import allReducers from './reducers/reducers';
 
-const store = createStore(
-  allReducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()); // eslint-disable-line
+const store = createStore(allReducers, composeWithDevTools(applyMiddleware(thunk))); // eslint-disable-line
 
 ReactDOM.render(
   <Provider store={store}>

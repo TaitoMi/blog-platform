@@ -1,78 +1,109 @@
+/* eslint-disable */
+
 import React, { Component } from 'react';
-import { Button, Input } from 'antd';
+import { Button } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Formik } from 'formik';
 import * as actions from '../actions/actions';
+import Field from './Field';
+import validationSchema from '../validationSchema';
 
 class SignUp extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      thx: 'ku',
-    };
+    this.state = {};
   }
 
-  registation = event => {
-    event.preventDefault();
+  registrationHandler = userData => {
+    const { registration } = this.props;
+    registration(userData);
   };
 
   render() {
-    const { thx } = this.state;
-    // eslint-disable-next-line react/prop-types
-    const { email, username, password, emailHandler, usernameHandler } = this.props;
+    const { isRegSuccessful, error } = this.props;
     return (
-      <form className="form" onSubmit={this.registation}>
-        {thx}
-        <div className="form__row">
-          <span className="form__label">Имя пользователя:</span>
-          <Input
-            className="form__input"
-            value={username}
-            placeholder="Введите имя пользователя"
-            onChange={usernameHandler}
-          />
-        </div>
-        <div className="form__row">
-          <span className="form__label">Email:</span>
-          <input type="text" value={email} onChange={emailHandler} />
-          <Input
-            className="form__input"
-            value={email}
-            placeholder="Введите email"
-            onChange={emailHandler}
-          />
-        </div>
-        <div className="form__row">
-          <span className="form__label">Пароль:</span>
-          <Input className="form__input" value={password} placeholder="Введите пароль" />
-        </div>
-        <div className="form__row">
-          <Button htmlType="submit" className="form__submit-btn" type="primary">
-            Регистрация
-          </Button>
-          <NavLink to="/login">
-            <Button type="danger">Уже есть аккаунт?</Button>
-          </NavLink>
-        </div>
-      </form>
+      <Formik
+        initialValues={{
+          username: '',
+          password: '',
+          email: '',
+        }}
+        validationSchema={validationSchema}
+        onSubmit={(values, { setSubmitting, resetForm }) => {
+          // setSubmitting(true);
+          this.registrationHandler(values);
+        }}
+      >
+        {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+          <form className="form" onSubmit={handleSubmit}>
+            <>{JSON.stringify(values, null, 2)}</>
+            {console.log(isRegSuccessful, 'reg')}
+            <div>{isRegSuccessful}</div>
+            <Field
+              label="имя"
+              changer={handleChange}
+              blur={handleBlur}
+              idName="username"
+              value={values.username}
+              touched={touched.username}
+              error={errors.username}
+            />
+            <Field
+              label="email"
+              changer={handleChange}
+              blur={handleBlur}
+              idName="email"
+              value={values.email}
+              touched={touched.email}
+              error={errors.email}
+            />
+            <Field
+              label="пароль"
+              changer={handleChange}
+              blur={handleBlur}
+              idName="password"
+              value={values.password}
+              touched={touched.password}
+              error={errors.password}
+            />
+            <div className="form__row">
+              <Button
+                loading={isSubmitting}
+                className="form__submit-btn"
+                htmlType="submit"
+                type="primary"
+              >
+                Зарегистрироваться
+              </Button>
+              <NavLink to="/login">
+                <Button type="danger">Уже есть аккаунт?</Button>
+              </NavLink>
+            </div>
+            {isRegSuccessful ? <div>{isRegSuccessful}</div> : null}
+          </form>
+        )}
+      </Formik>
     );
   }
 }
 
-const mapStateToProps = ({ email, username, password }) => {
+const mapStateToProps = state => {
   return {
-    email,
-    username,
-    password,
+    email: state.user.email,
+    username: state.user.username,
+    password: state.user.password,
+    isRegSuccessful: state.user.isRegSuccessful,
+    error: state.user.error,
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  const { emailHandler, usernameHandler } = bindActionCreators(actions, dispatch);
+  const { usernameHandler, registration } = bindActionCreators(actions, dispatch);
   return {
-    emailHandler,
     usernameHandler,
+    registration,
   };
 };
 
