@@ -1,43 +1,97 @@
 import React, { Component } from 'react';
-import { Input, Button } from 'antd';
+import { Button } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { Formik, Form } from 'formik';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
+import validationSchema from '../validationSchema';
+import Field from './Field';
+import * as actions from '../actions/actions';
 
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      something: '111',
-    };
+    this.state = {};
   }
 
-  logIn = event => {
-    event.preventDefault();
+  loginHandler = user => {
+    const { login } = this.props;
+    login(user);
   };
 
   render() {
-    const { something } = this.state;
+    const { error } = this.props;
     return (
-      <form className="form" onSubmit={this.logIn}>
-        {something}
-        <div className="form__row">
-          <span className="form__label">Email:</span>
-          <Input className="form__input" id="email" placeholder="Введите email" />
-        </div>
-        <div className="form__row">
-          <span className="form__label">Пароль:</span>
-          <Input className="form__input" id="password" placeholder="Введите пароль" />
-        </div>
-        <div className="form__row">
-          <Button htmlType="submit" className="form__submit-btn" type="primary">
-            Войти
-          </Button>
-          <NavLink to="/signup">
-            <Button type="danger">Регистрация</Button>
-          </NavLink>
-        </div>
-      </form>
+      <Formik
+        initialValues={{
+          password: '',
+          email: '',
+        }}
+        validationSchema={validationSchema}
+        onSubmit={values => {
+          console.log('asdasdasd');
+          this.loginHandler(values);
+        }}
+      >
+        {({ values, errors, touched, handleChange, handleBlur }) => (
+          <Form className="form">
+            <Field
+              label="email"
+              changer={handleChange}
+              blur={handleBlur}
+              idName="email"
+              value={values.email}
+              touched={touched.email}
+              error={errors.email}
+              apiError={error ? error.email : null}
+            />
+            <Field
+              label="пароль"
+              changer={handleChange}
+              blur={handleBlur}
+              idName="password"
+              value={values.password}
+              touched={touched.password}
+              error={errors.password}
+              apiError={error ? error.password : null}
+            />
+            <div className="form__row">
+              <Button className="form__submit-btn" htmlType="submit" type="primary">
+                Войти
+              </Button>
+              <NavLink to="/signup">
+                <Button type="danger">Зарегистрироваться</Button>
+              </NavLink>
+            </div>
+          </Form>
+        )}
+      </Formik>
     );
   }
 }
 
-export default Login;
+Login.defaultProps = {
+  login: null,
+  error: null,
+};
+
+Login.propTypes = {
+  login: PropTypes.func,
+  error: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string])),
+};
+
+const mapStateToProps = state => {
+  return {
+    error: state.user.error,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  const { login } = bindActionCreators(actions, dispatch);
+  return {
+    login,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

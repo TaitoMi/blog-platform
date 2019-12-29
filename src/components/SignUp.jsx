@@ -22,7 +22,7 @@ class SignUp extends Component {
   };
 
   render() {
-    const { isRegSuccessful, error } = this.props;
+    const { isSuccessful, error } = this.props;
     return (
       <Formik
         initialValues={{
@@ -36,11 +36,8 @@ class SignUp extends Component {
           this.registrationHandler(values);
         }}
       >
-        {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+        {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
           <form className="form" onSubmit={handleSubmit}>
-            <>{JSON.stringify(values, null, 2)}</>
-            {console.log(isRegSuccessful, 'reg')}
-            <div>{isRegSuccessful}</div>
             <Field
               label="имя"
               changer={handleChange}
@@ -49,6 +46,7 @@ class SignUp extends Component {
               value={values.username}
               touched={touched.username}
               error={errors.username}
+              apiError={ error ? error.username : null }
             />
             <Field
               label="email"
@@ -58,6 +56,7 @@ class SignUp extends Component {
               value={values.email}
               touched={touched.email}
               error={errors.email}
+              apiError={ error ? error.email : null}
             />
             <Field
               label="пароль"
@@ -67,10 +66,10 @@ class SignUp extends Component {
               value={values.password}
               touched={touched.password}
               error={errors.password}
+              apiError={ error ? error.password : null}
             />
             <div className="form__row">
               <Button
-                loading={isSubmitting}
                 className="form__submit-btn"
                 htmlType="submit"
                 type="primary"
@@ -81,7 +80,7 @@ class SignUp extends Component {
                 <Button type="danger">Уже есть аккаунт?</Button>
               </NavLink>
             </div>
-            {isRegSuccessful ? <div>{isRegSuccessful}</div> : null}
+            {isSuccessful ? <div>Вы успешно зарегистрировались</div> : null}
           </form>
         )}
       </Formik>
@@ -91,18 +90,14 @@ class SignUp extends Component {
 
 const mapStateToProps = state => {
   return {
-    email: state.user.email,
-    username: state.user.username,
-    password: state.user.password,
-    isRegSuccessful: state.user.isRegSuccessful,
+    isSuccessful: state.user.isSuccessful,
     error: state.user.error,
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  const { usernameHandler, registration } = bindActionCreators(actions, dispatch);
+  const { registration } = bindActionCreators(actions, dispatch);
   return {
-    usernameHandler,
     registration,
   };
 };

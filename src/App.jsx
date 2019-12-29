@@ -2,26 +2,36 @@ import React from 'react';
 import 'normalize.css';
 import 'antd/dist/antd.css';
 import './styles/styles.scss';
-import { BrowserRouter, NavLink, Route } from 'react-router-dom';
-import { Button } from 'antd';
+import PropTypes from 'prop-types';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import Header from './components/Header';
 
-function App() {
+const App = props => {
+  const { isAuthorized } = props;
+  const render = () => (isAuthorized ? <Redirect to="/login" /> : null);
   return (
-    <div className="App">
-      <BrowserRouter>
-        <NavLink to="/login">
-          <Button type="primary">Login</Button>
-        </NavLink>
-        <NavLink to="/signup">
-          <Button type="danger">Registration</Button>
-        </NavLink>
+    <BrowserRouter>
+      <Header />
+      <div className="App">
+        <Route exact path="/" render={render()} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
-      </BrowserRouter>
-    </div>
+      </div>
+    </BrowserRouter>
   );
-}
-// export default App;
-export default App;
+};
+
+App.defaultProps = {
+  isAuthorized: null,
+};
+
+App.propTypes = {
+  isAuthorized: PropTypes.bool,
+};
+
+const mapStateToProps = state => ({ isAuthorized: state.user.isAuthorized });
+
+export default connect(mapStateToProps)(App);

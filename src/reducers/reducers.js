@@ -4,17 +4,18 @@ const initialState = {
   email: '',
   username: '',
   password: '',
-  isRegSuccessful: '',
+  isSuccessful: '',
   error: null,
+  isAuthorized: null,
 };
 
 const userForm = (state = initialState, action) => {
   const { payload } = action;
   switch (action.type) {
     case 'USER_REGISTERED':
-      return { ...state, isRegSuccessful: payload.reg };
+      return { ...state, isSuccessful: payload.reg, error: null };
     case 'REG_ERROR':
-      return { ...state, error: payload.error };
+      return { ...state, isSuccessful: null, error: payload.error };
     default:
       return state;
   }

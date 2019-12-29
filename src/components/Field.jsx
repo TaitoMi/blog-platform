@@ -2,7 +2,15 @@
 import React from 'react';
 import { Input } from 'antd';
 
-const Field = ({ label, changer, blur, idName, value, touched, error }) => {
+const Field = ({
+                 label,
+                 changer,
+                 blur,
+                 idName,
+                 value,
+                 touched,
+                 error,
+               apiError }) => {
   return (
     <>
       <div className="form__row">
@@ -18,6 +26,7 @@ const Field = ({ label, changer, blur, idName, value, touched, error }) => {
         />
       </div>
       {touched && error ? <div className="input__error">{error}</div> : null}
+      {apiError ? <div className="input__error">{apiError}</div> : null}
     </>
   );
 };

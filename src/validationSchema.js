@@ -8,9 +8,15 @@ const validationSchema = Yup.object().shape({
     .max(50, 'Не более 50 символов'),
   password: Yup.string()
     .min(8, 'Не меньше 8')
+    .max(40, 'Не больше 40'),
+  loginPassword: Yup.string()
+    .min(8, 'Не меньше 8')
     .max(40, 'Не больше 40')
     .required(isRequired),
   email: Yup.string()
+    .required(isRequired)
+    .email('Неправильный email адрес'),
+  loginEmail: Yup.string()
     .required(isRequired)
     .email('Неправильный email адрес'),
 });
