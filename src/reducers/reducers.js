@@ -1,10 +1,7 @@
 import { combineReducers } from 'redux';
 
 const initialState = {
-  email: '',
-  username: '',
-  password: '',
-  isSuccessful: '',
+  isSuccessful: null,
   error: null,
   isAuthorized: null,
 };
@@ -16,6 +13,12 @@ const userForm = (state = initialState, action) => {
       return { ...state, isSuccessful: payload.reg, error: null };
     case 'REG_ERROR':
       return { ...state, isSuccessful: null, error: payload.error };
+    case 'USER_LOGIN':
+      return { ...state, ...payload.user, isAuthorized: true };
+    case 'LOGIN_ERROR':
+      return { ...state, error: true };
+    case 'LOGIN_EXIT':
+      return { ...initialState };
     default:
       return state;
   }

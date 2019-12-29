@@ -8,15 +8,16 @@ import { connect } from 'react-redux';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Header from './components/Header';
+import MainPage from './components/MainPage';
 
 const App = props => {
   const { isAuthorized } = props;
-  const render = () => (isAuthorized ? <Redirect to="/login" /> : null);
+  const render = () => (!isAuthorized ? <Redirect to="/login" /> : <MainPage />);
   return (
     <BrowserRouter>
       <Header />
       <div className="App">
-        <Route exact path="/" render={render()} />
+        <Route exact path="/" render={render} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
       </div>

@@ -1,14 +1,27 @@
-/* eslint-disable */
-
 import React, { Component } from 'react';
 import { Button } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
+import PropTypes from 'prop-types';
+import * as Yup from 'yup';
 import * as actions from '../actions/actions';
 import Field from './Field';
-import validationSchema from '../validationSchema';
+
+const isRequired = 'Обязательное поле';
+const validationSchema = Yup.object().shape({
+  username: Yup.string()
+    .required(isRequired)
+    .min(4, 'Не меньше 4 символов')
+    .max(50, 'Не более 50 символов'),
+  password: Yup.string()
+    .min(8, 'Не меньше 8')
+    .max(40, 'Не больше 40'),
+  email: Yup.string()
+    .required(isRequired)
+    .email('Неправильный email адрес'),
+});
 
 class SignUp extends Component {
   constructor(props) {
@@ -31,13 +44,13 @@ class SignUp extends Component {
           email: '',
         }}
         validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          // setSubmitting(true);
+        onSubmit={(values, { setSubmitting }) => {
+          setSubmitting(isSuccessful);
           this.registrationHandler(values);
         }}
       >
-        {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
-          <form className="form" onSubmit={handleSubmit}>
+        {({ values, errors, touched, handleChange, handleBlur }) => (
+          <Form className="form">
             <Field
               label="имя"
               changer={handleChange}
@@ -46,7 +59,7 @@ class SignUp extends Component {
               value={values.username}
               touched={touched.username}
               error={errors.username}
-              apiError={ error ? error.username : null }
+              apiError={error ? error.username : null}
             />
             <Field
               label="email"
@@ -56,7 +69,7 @@ class SignUp extends Component {
               value={values.email}
               touched={touched.email}
               error={errors.email}
-              apiError={ error ? error.email : null}
+              apiError={error ? error.email : null}
             />
             <Field
               label="пароль"
@@ -66,14 +79,10 @@ class SignUp extends Component {
               value={values.password}
               touched={touched.password}
               error={errors.password}
-              apiError={ error ? error.password : null}
+              apiError={error ? error.password : null}
             />
             <div className="form__row">
-              <Button
-                className="form__submit-btn"
-                htmlType="submit"
-                type="primary"
-              >
+              <Button className="form__submit-btn" htmlType="submit" type="primary">
                 Зарегистрироваться
               </Button>
               <NavLink to="/login">
@@ -81,12 +90,24 @@ class SignUp extends Component {
               </NavLink>
             </div>
             {isSuccessful ? <div>Вы успешно зарегистрировались</div> : null}
-          </form>
+          </Form>
         )}
       </Formik>
     );
   }
 }
+
+SignUp.defaultProps = {
+  registration: null,
+  isSuccessful: null,
+  error: null,
+};
+
+SignUp.propTypes = {
+  registration: PropTypes.func,
+  isSuccessful: PropTypes.bool,
+  error: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string])),
+};
 
 const mapStateToProps = state => {
   return {

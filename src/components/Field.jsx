@@ -1,16 +1,8 @@
-/* eslint-disable */
 import React from 'react';
 import { Input } from 'antd';
+import PropTypes from 'prop-types';
 
-const Field = ({
-                 label,
-                 changer,
-                 blur,
-                 idName,
-                 value,
-                 touched,
-                 error,
-               apiError }) => {
+const Field = ({ label, changer, blur, idName, value, touched, error, apiError }) => {
   return (
     <>
       <div className="form__row">
@@ -29,6 +21,28 @@ const Field = ({
       {apiError ? <div className="input__error">{apiError}</div> : null}
     </>
   );
+};
+
+Field.defaultProps = {
+  label: '',
+  idName: '',
+  value: '',
+  error: '',
+  apiError: '',
+  changer: null,
+  blur: null,
+  touched: null,
+};
+
+Field.propTypes = {
+  label: PropTypes.string,
+  idName: PropTypes.string,
+  value: PropTypes.string,
+  error: PropTypes.string,
+  apiError: PropTypes.string,
+  changer: PropTypes.func,
+  blur: PropTypes.func,
+  touched: PropTypes.bool,
 };
 
 export default Field;

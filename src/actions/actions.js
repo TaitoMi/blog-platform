@@ -46,10 +46,23 @@ export const login = ({ email, password }) => async dispatch => {
       },
     }),
   });
-  console.log(response);
-  return dispatch({ type: 'ku' });
+  if (response.ok) {
+    const action = await response.json().then(user => {
+      return {
+        type: 'USER_LOGIN',
+        payload: {
+          ...user,
+        },
+      };
+    });
+    return dispatch(action);
+  }
+  const action = await response.json().then(() => {
+    return {
+      type: 'LOGIN_ERROR',
+    };
+  });
+  return dispatch(action);
 };
 
-const ku = 'ku';
-
-export default ku;
+export const exit = () => ({ type: 'LOGIN_EXIT' });
