@@ -33,13 +33,13 @@ body {
   margin-top: 50px;
 }
 .header {
-  min-height: 150px;
+  min-height: 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: 5px 0 20px 5px lightslategray;
   &__logo {
-    width: 500px;
+    width: 250px;
   }
   &__button {
     margin: 0 10px;

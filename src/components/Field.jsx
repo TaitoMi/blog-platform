@@ -14,7 +14,7 @@ const Field = ({ label, changer, blur, idName, value, touched, error, apiError }
           id={idName}
           name={idName}
           value={value}
-          className={`form__input ${touched && error ? 'has-error' : null}`}
+          className={`form__input ${touched && error ? 'has-error' : ''}`}
         />
       </div>
       {touched && error ? <div className="input__error">{error}</div> : null}

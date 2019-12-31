@@ -19,6 +19,8 @@ const userForm = (state = initialState, action) => {
       return { ...state, error: true };
     case 'LOGIN_EXIT':
       return { ...initialState };
+    case 'ERROR_CLEAR':
+      return { ...state, error: null };
     default:
       return state;
   }

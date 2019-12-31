@@ -65,4 +65,6 @@ export const login = ({ email, password }) => async dispatch => {
   return dispatch(action);
 };
 
+export const clear = () => ({ type: 'ERROR_CLEAR' });
+
 export const exit = () => ({ type: 'LOGIN_EXIT' });

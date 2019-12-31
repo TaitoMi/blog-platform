@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Button } from 'antd';
+import React from 'react';
+import { Button, Input } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -23,90 +23,93 @@ const validationSchema = Yup.object().shape({
     .email('Неправильный email адрес'),
 });
 
-class SignUp extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  registrationHandler = userData => {
-    const { registration } = this.props;
+const SignUp = ({ isSuccessful, error, clear, registration }) => {
+  const registrationHandler = userData => {
     registration(userData);
   };
 
-  render() {
-    const { isSuccessful, error } = this.props;
-    return (
-      <Formik
-        initialValues={{
-          username: '',
-          password: '',
-          email: '',
-        }}
-        validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          setSubmitting(isSuccessful);
-          this.registrationHandler(values);
-        }}
-      >
-        {({ values, errors, touched, handleChange, handleBlur }) => (
-          <Form className="form">
-            <Field
-              label="имя"
-              changer={handleChange}
-              blur={handleBlur}
-              idName="username"
-              value={values.username}
-              touched={touched.username}
-              error={errors.username}
-              apiError={error ? error.username : null}
-            />
-            <Field
-              label="email"
-              changer={handleChange}
-              blur={handleBlur}
-              idName="email"
-              value={values.email}
-              touched={touched.email}
-              error={errors.email}
-              apiError={error ? error.email : null}
-            />
-            <Field
-              label="пароль"
-              changer={handleChange}
-              blur={handleBlur}
-              idName="password"
+  return (
+    <Formik
+      initialValues={{
+        username: '',
+        password: '',
+        email: '',
+      }}
+      validationSchema={validationSchema}
+      onSubmit={(values, { setSubmitting }) => {
+        setSubmitting(isSuccessful);
+        registrationHandler(values);
+      }}
+    >
+      {({ values, errors, touched, handleChange, handleBlur }) => (
+        <Form className="form">
+          <Field
+            label="имя"
+            changer={handleChange}
+            blur={handleBlur}
+            idName="username"
+            value={values.username}
+            touched={touched.username}
+            error={errors.username}
+            apiError={error ? error.username : null}
+          />
+          <Field
+            label="email"
+            changer={handleChange}
+            blur={handleBlur}
+            idName="email"
+            value={values.email}
+            touched={touched.email}
+            error={errors.email}
+            apiError={error ? error.email : null}
+          />
+          <div className="form__row">
+            <span className="form__label">Введите пароль</span>
+            <Input.Password
+              onChange={handleChange}
+              onBlur={handleBlur}
               value={values.password}
-              touched={touched.password}
-              error={errors.password}
-              apiError={error ? error.password : null}
+              id="password"
+              name="password"
             />
-            <div className="form__row">
-              <Button className="form__submit-btn" htmlType="submit" type="primary">
-                Зарегистрироваться
-              </Button>
-              <NavLink to="/login">
-                <Button type="danger">Уже есть аккаунт?</Button>
-              </NavLink>
-            </div>
-            {isSuccessful ? <div>Вы успешно зарегистрировались</div> : null}
-          </Form>
-        )}
-      </Formik>
-    );
-  }
-}
+          </div>
+          {/* <Field */}
+          {/*  label="пароль" */}
+          {/*  changer={handleChange} */}
+          {/*  blur={handleBlur} */}
+          {/*  idName="password" */}
+          {/*  value={values.password} */}
+          {/*  touched={touched.password} */}
+          {/*  error={errors.password} */}
+          {/*  apiError={error ? error.password : null} */}
+          {/* /> */}
+          <div className="form__row">
+            <Button className="form__submit-btn" htmlType="submit" type="primary">
+              Зарегистрироваться
+            </Button>
+            <NavLink to="/login" onClick={clear}>
+              <Button type="danger">Уже есть аккаунт?</Button>
+            </NavLink>
+          </div>
+          {isSuccessful ? <div>Вы успешно зарегистрировались</div> : null}
+        </Form>
+      )}
+    </Formik>
+  );
+};
 
 SignUp.defaultProps = {
   registration: null,
   isSuccessful: null,
   error: null,
+  clear: null,
 };
 
 SignUp.propTypes = {
   registration: PropTypes.func,
   isSuccessful: PropTypes.bool,
   error: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string])),
+  clear: PropTypes.func,
 };
 
 const mapStateToProps = state => {
@@ -117,9 +120,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  const { registration } = bindActionCreators(actions, dispatch);
+  const { registration, clear } = bindActionCreators(actions, dispatch);
   return {
     registration,
+    clear,
   };
 };
 
