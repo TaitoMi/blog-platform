@@ -1,5 +1,4 @@
-/* eslint-disable */
-export const login = ({ email, password }) => async dispatch => {
+const login = ({ email, password }) => async dispatch => {
   const response = await fetch('https://conduit.productionready.io/api/users/login/', {
     method: 'POST',
     headers: {
@@ -30,3 +29,5 @@ export const login = ({ email, password }) => async dispatch => {
   });
   return dispatch(action);
 };
+
+export default login;

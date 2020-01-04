@@ -1,5 +1,6 @@
 /* eslint-disable */
-export const createArticle = (values, token) => async dispatch => {
+
+const createArticle = (values, token) => async dispatch => {
   const response = await fetch('https://conduit.productionready.io/api/articles', {
     method: 'POST',
     headers: {
@@ -10,7 +11,18 @@ export const createArticle = (values, token) => async dispatch => {
       article: { ...values },
     }),
   });
-  console.log(response.json());
+  if(response.ok) {
+    const action = await response.json().then(el => {
+      console.log(el);
+      return {
+        type: 'CREATE_ARTICLE',
+        payload: {...el},
+      }
+    })
+    return dispatch(action);
+  }
 
   return 'ku';
 };
+
+export default createArticle;

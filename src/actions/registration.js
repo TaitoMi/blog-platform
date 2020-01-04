@@ -1,5 +1,4 @@
-/* eslint-disable */
-export const registration = ({ email, username, password }) => {
+const registration = ({ email, username, password }) => {
   return async dispatch => {
     const response = await fetch('https://conduit.productionready.io/api/users/', {
       method: 'POST',
@@ -33,3 +32,5 @@ export const registration = ({ email, username, password }) => {
     return dispatch(action);
   };
 };
+
+export default registration;

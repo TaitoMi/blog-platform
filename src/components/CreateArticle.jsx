@@ -1,9 +1,9 @@
-/* eslint-disable */
 import React from 'react';
 import { Form, Formik, FieldArray } from 'formik';
 import { Button, Input } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 import * as actions from '../actions/actions';
 import Field from './Field';
 
@@ -17,10 +17,10 @@ const CreateArticle = ({ isAuthorized, createArticle, token, login }) => {
         tagList: [''],
       }}
       onSubmit={values => {
-        // if(!isAuthorized) {
-        //   alert('Необходима авторизация')
-        //   return;
-        // }
+        if (!isAuthorized) {
+          alert('Необходима авторизация');
+          return;
+        }
         const newValues = { ...values, tagList: values.tagList.filter(el => el !== '') };
         createArticle(newValues, token);
       }}
@@ -97,6 +97,20 @@ const CreateArticle = ({ isAuthorized, createArticle, token, login }) => {
       )}
     </Formik>
   );
+};
+
+CreateArticle.defaultProps = {
+  isAuthorized: null,
+  token: '',
+  createArticle: null,
+  login: null,
+};
+
+CreateArticle.propTypes = {
+  isAuthorized: PropTypes.bool,
+  token: PropTypes.string,
+  createArticle: PropTypes.func,
+  login: PropTypes.func,
 };
 
 const mapStateToProps = state => {

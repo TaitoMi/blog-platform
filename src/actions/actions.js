@@ -1,6 +1,6 @@
-import { registration } from './registration';
-import { login } from './login';
-import { createArticle } from './createArticle';
+import registration from './registration';
+import login from './login';
+import createArticle from './createArticle';
 
 export { registration, login, createArticle };
 

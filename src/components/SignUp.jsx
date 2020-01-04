@@ -73,16 +73,6 @@ const SignUp = ({ isSuccessful, error, clear, registration }) => {
               name="password"
             />
           </div>
-          {/* <Field */}
-          {/*  label="пароль" */}
-          {/*  changer={handleChange} */}
-          {/*  blur={handleBlur} */}
-          {/*  idName="password" */}
-          {/*  value={values.password} */}
-          {/*  touched={touched.password} */}
-          {/*  error={errors.password} */}
-          {/*  apiError={error ? error.password : null} */}
-          {/* /> */}
           <div className="form__row">
             <Button className="form__submit-btn" htmlType="submit" type="primary">
               Зарегистрироваться
@@ -108,7 +98,12 @@ SignUp.defaultProps = {
 SignUp.propTypes = {
   registration: PropTypes.func,
   isSuccessful: PropTypes.bool,
-  error: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string])),
+  error: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.array,
+    PropTypes.object,
+  ]),
   clear: PropTypes.func,
 };
 
