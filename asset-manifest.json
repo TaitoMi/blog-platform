@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/blog-platform/static/css/main.16975f68.chunk.css",
-    "main.js": "/blog-platform/static/js/main.b5aee9c1.chunk.js",
-    "main.js.map": "/blog-platform/static/js/main.b5aee9c1.chunk.js.map",
+    "main.css": "/blog-platform/static/css/main.3e5bfb4a.chunk.css",
+    "main.js": "/blog-platform/static/js/main.11489fef.chunk.js",
+    "main.js.map": "/blog-platform/static/js/main.11489fef.chunk.js.map",
     "runtime-main.js": "/blog-platform/static/js/runtime-main.a0474550.js",
     "runtime-main.js.map": "/blog-platform/static/js/runtime-main.a0474550.js.map",
-    "static/css/2.959a5197.chunk.css": "/blog-platform/static/css/2.959a5197.chunk.css",
-    "static/js/2.1730b98e.chunk.js": "/blog-platform/static/js/2.1730b98e.chunk.js",
-    "static/js/2.1730b98e.chunk.js.map": "/blog-platform/static/js/2.1730b98e.chunk.js.map",
+    "static/css/2.3bfc9ba0.chunk.css": "/blog-platform/static/css/2.3bfc9ba0.chunk.css",
+    "static/js/2.f4a36a06.chunk.js": "/blog-platform/static/js/2.f4a36a06.chunk.js",
+    "static/js/2.f4a36a06.chunk.js.map": "/blog-platform/static/js/2.f4a36a06.chunk.js.map",
     "index.html": "/blog-platform/index.html",
-    "precache-manifest.7b2ca1f5b4531c2196fecbc5a955187f.js": "/blog-platform/precache-manifest.7b2ca1f5b4531c2196fecbc5a955187f.js",
+    "precache-manifest.506e38f168e588370a79634bdf6352b9.js": "/blog-platform/precache-manifest.506e38f168e588370a79634bdf6352b9.js",
     "service-worker.js": "/blog-platform/service-worker.js",
-    "static/css/2.959a5197.chunk.css.map": "/blog-platform/static/css/2.959a5197.chunk.css.map",
-    "static/css/main.16975f68.chunk.css.map": "/blog-platform/static/css/main.16975f68.chunk.css.map",
-    "static/js/2.1730b98e.chunk.js.LICENSE": "/blog-platform/static/js/2.1730b98e.chunk.js.LICENSE",
+    "static/css/2.3bfc9ba0.chunk.css.map": "/blog-platform/static/css/2.3bfc9ba0.chunk.css.map",
+    "static/css/main.3e5bfb4a.chunk.css.map": "/blog-platform/static/css/main.3e5bfb4a.chunk.css.map",
+    "static/js/2.f4a36a06.chunk.js.LICENSE": "/blog-platform/static/js/2.f4a36a06.chunk.js.LICENSE",
     "static/media/realworld.png": "/blog-platform/static/media/realworld.ea1785a0.png"
   },
   "entrypoints": [
     "static/js/runtime-main.a0474550.js",
-    "static/css/2.959a5197.chunk.css",
-    "static/js/2.1730b98e.chunk.js",
-    "static/css/main.16975f68.chunk.css",
-    "static/js/main.b5aee9c1.chunk.js"
+    "static/css/2.3bfc9ba0.chunk.css",
+    "static/js/2.f4a36a06.chunk.js",
+    "static/css/main.3e5bfb4a.chunk.css",
+    "static/js/main.11489fef.chunk.js"
   ]
 }
