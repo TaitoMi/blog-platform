@@ -26,4 +26,11 @@ const userForm = (state = initialState, action) => {
   }
 };
 
-export default combineReducers({ user: userForm });
+const articles = (state = {}, action) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({ user: userForm, articles });

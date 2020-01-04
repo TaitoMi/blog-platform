@@ -60,16 +60,6 @@ const Login = ({ error, isAuthorized, login, clear }) => {
                 name="password"
               />
             </div>
-            {/* <Field */}
-            {/*  label="пароль" */}
-            {/*  changer={handleChange} */}
-            {/*  blur={handleBlur} */}
-            {/*  idName="password" */}
-            {/*  value={values.password} */}
-            {/*  touched={touched.password} */}
-            {/*  error={errors.password} */}
-            {/*  apiError={error ? error.password : null} */}
-            {/* /> */}
             <div className="form__row">
               <Button htmlType="submit" className="form__submit-btn" type="primary">
                 Войти

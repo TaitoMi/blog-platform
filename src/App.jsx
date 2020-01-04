@@ -9,6 +9,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Header from './components/Header';
 import MainPage from './components/MainPage';
+import CreateArticle from './components/CreateArticle';
 
 const App = props => {
   const { isAuthorized } = props;
@@ -20,6 +21,7 @@ const App = props => {
         <Route exact path="/" render={render} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
+        <Route path="/add" component={CreateArticle} />
       </div>
     </BrowserRouter>
   );

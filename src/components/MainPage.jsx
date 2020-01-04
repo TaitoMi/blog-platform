@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button } from 'antd';
 import { bindActionCreators } from 'redux';
+import { NavLink } from 'react-router-dom';
 import * as actions from '../actions/actions';
 
 const MainPage = ({ id, email, username, exit }) => {
@@ -13,6 +14,9 @@ const MainPage = ({ id, email, username, exit }) => {
         <div className="user__row">email: {email}</div>
         <div className="user__row">username: {username}</div>
       </div>
+      <NavLink to="/add">
+        <Button type="primary">Создать страницу</Button>
+      </NavLink>
       <Button htmlType="submit" className="user__btn" type="danger">
         Выход
       </Button>

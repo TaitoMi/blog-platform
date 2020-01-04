@@ -69,6 +69,15 @@ body {
     margin: 10px 0;
     align-items: center;
     justify-content: center;
+    &-tags {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+  }
+  &__tag {
+    margin-right: 10px;
+    width: 100px;
   }
   &__input {
     width: 370px;
