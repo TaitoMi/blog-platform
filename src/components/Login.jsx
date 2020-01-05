@@ -64,6 +64,14 @@ const Login = ({ error, isAuthorized, login, clear }) => {
               <Button htmlType="submit" className="form__submit-btn" type="primary">
                 Войти
               </Button>
+              <Button
+                htmlType="button"
+                onClick={() => login({ email: 'gfdaker96@gmail.com', password: '321zxc321' })}
+                className="form__submit-btn"
+                type="primary"
+              >
+                loginForTest
+              </Button>
               <NavLink to="/signup" onClick={clear}>
                 <Button type="danger">Зарегистрироваться</Button>
               </NavLink>

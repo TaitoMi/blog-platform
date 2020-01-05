@@ -3,7 +3,7 @@ import 'normalize.css';
 import 'antd/dist/antd.css';
 import './styles/styles.scss';
 import PropTypes from 'prop-types';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
@@ -18,10 +18,12 @@ const App = props => {
     <BrowserRouter>
       <Header />
       <div className="App">
-        <Route exact path="/" render={render} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={SignUp} />
-        <Route path="/add" component={CreateArticle} />
+        <Switch>
+          <Route exact path="/" render={render} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/add" component={CreateArticle} />
+        </Switch>
       </div>
     </BrowserRouter>
   );
