@@ -1,56 +1,71 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button } from 'antd';
+import { Button, Pagination } from 'antd';
 import { bindActionCreators } from 'redux';
 import { NavLink } from 'react-router-dom';
+
 import * as actions from '../actions/actions';
+import Articles from './Articles';
 
 class MainPage extends React.Component {
-  check = async () => {
-    const { token } = this.props;
-    const response = await fetch('https://conduit.productionready.io/api/articles/?limit=100', {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${token}`,
-      },
-    });
-    await response.json().then(el => {
-      this.check2();
-      console.log(el);
-    });
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentPage: 1,
+    };
+  }
 
-  check2 = async () => {
-    const { token } = this.props;
-    const response = await fetch('https://conduit.productionready.io/api/articles/feed', {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${token}`,
-      },
-    });
-    await response.json().then(el => console.log(el));
+  componentDidMount() {
+    const { getArticles } = this.props;
+    getArticles();
+  }
+
+  pageHandler = page => {
+    this.setState({ currentPage: page });
   };
 
   render() {
-    const { id, email, username, exit } = this.props;
+    const { id, email, username, exit, articles } = this.props;
+    const { currentPage } = this.state;
+    const from = currentPage * 10 - 10;
+    const to = currentPage * 10 - 1;
+    const articlesPart = articles.slice(from, to);
     return (
-      <form className="user" onSubmit={exit}>
-        <div className="user__info">
-          <div className="user__row">id: {id}</div>
-          <div className="user__row">email: {email}</div>
-          <div className="user__row">username: {username}</div>
-        </div>
-        <button onClick={this.check} type="button">
-          clic k
-        </button>
-        <NavLink to="/add">
-          <Button type="primary">Создать страницу</Button>
-        </NavLink>
-        <Button htmlType="submit" className="user__btn" type="danger">
-          Выход
-        </Button>
-      </form>
+      <>
+        <Pagination
+          defaultCurrent={1}
+          onChange={this.pageHandler}
+          current={currentPage}
+          pageSize={10}
+          total={articles.length}
+        />
+        <main className="container">
+          <aside className="user">
+            <div className="user__info">
+              <div className="user__row">id: {id}</div>
+              <div className="user__row">email: {email}</div>
+              <div className="user__row">username: {username}</div>
+            </div>
+            <div className="user__buttons">
+              <NavLink to="/add">
+                <Button type="primary">Создать страницу</Button>
+              </NavLink>
+              <Button htmlType="button" onClick={exit} className="user__btn" type="danger">
+                Выход
+              </Button>
+            </div>
+          </aside>
+          <Articles articles={articlesPart} />
+        </main>
+        <Pagination
+          defaultCurrent={1}
+          onChange={this.pageHandler}
+          current={currentPage}
+          pageSize={10}
+          total={articles.length}
+        />
+      </>
     );
   }
 }
@@ -60,7 +75,8 @@ MainPage.defaultProps = {
   email: '',
   username: '',
   exit: null,
-  token: '',
+  getArticles: null,
+  articles: [],
 };
 
 MainPage.propTypes = {
@@ -68,7 +84,8 @@ MainPage.propTypes = {
   email: PropTypes.string,
   username: PropTypes.string,
   exit: PropTypes.func,
-  token: PropTypes.string,
+  getArticles: PropTypes.func,
+  articles: PropTypes.arrayOf(PropTypes.object),
 };
 
 const mapStateToProps = state => {
@@ -77,13 +94,15 @@ const mapStateToProps = state => {
     email: state.user.email,
     username: state.user.username,
     token: state.user.token,
+    articles: state.articles.articles,
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  const { exit } = bindActionCreators(actions, dispatch);
+  const { exit, getArticles } = bindActionCreators(actions, dispatch);
   return {
     exit,
+    getArticles,
   };
 };
 

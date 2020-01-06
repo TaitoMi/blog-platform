@@ -10,12 +10,72 @@ body {
   box-sizing: border-box;
 }
 
+.container {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.articles {
+  width: 70%;
+}
+
+.article {
+  box-shadow: 0 0 10px 2px lightslategray;
+  padding: 15px;
+  margin-bottom: 25px;
+  cursor: pointer;
+
+  &__title {
+    font-size: 30px;
+    padding: 15px;
+    border-bottom: 1px solid cornflowerblue;
+    color: cornflowerblue;
+  }
+  &__body {
+    padding: 15px;
+  }
+  &__meta {
+    padding: 15px;
+    border-top: 1px solid cornflowerblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__created {
+    display: flex;
+    flex-direction: column;
+  }
+  &__likes {
+    display: flex;
+    align-items: center;
+  }
+  &__tags {
+    display: flex;
+    padding: 5px;
+    flex-wrap: wrap;
+    border-top: 1px solid cornflowerblue;
+  }
+  &__tag {
+    border-radius: 5px;
+    margin: 3px 5px;
+    padding: 5px;
+    border: 1px dashed slategrey;
+  }
+  &__likeBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+  }
+}
+
 .user {
   width: 400px;
   font-size: 25px;
   padding: 20px;
-  margin-left: 50%;
-  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -23,8 +83,19 @@ body {
   &__row {
     text-align: left;
   }
+  &__buttons {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    a {
+      height: 50px;
+    }
+  }
   &__info {
     width: 100%;
+    margin-bottom: 20px;
   }
 }
 
@@ -32,15 +103,18 @@ body {
   text-align: center;
   margin-top: 50px;
 }
+
 .header {
   min-height: 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: 5px 0 20px 5px lightslategray;
+
   &__logo {
     width: 250px;
   }
+
   &__button {
     margin: 0 10px;
     width: 120px;
@@ -69,26 +143,31 @@ body {
     margin: 10px 0;
     align-items: center;
     justify-content: center;
+
     &-tags {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
     }
   }
+
   &__tag {
     margin-right: 10px;
     width: 100px;
   }
+
   &__input {
     width: 370px;
     font-size: 18px !important;
   }
+
   &__label {
     display: flex;
     text-align: left;
     align-items: center;
     width: 160px;
   }
+
   &__submit-btn {
     margin-right: 10px;
   }
