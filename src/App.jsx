@@ -10,6 +10,7 @@ import SignUp from './components/SignUp';
 import Header from './components/Header';
 import MainPage from './components/MainPage';
 import CreateArticle from './components/CreateArticle';
+import SingleArticle from './components/SingleArticle';
 
 const App = props => {
   const { isAuthorized } = props;
@@ -23,6 +24,22 @@ const App = props => {
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
           <Route path="/add" component={CreateArticle} />
+          <Route
+            path="/articles/:slug"
+            render={propses => {
+              const { params, path } = propses.match;
+              return (
+                <Switch>
+                  <Route exact path={`${path}/`}>
+                    <SingleArticle {...params} />
+                  </Route>
+                  <Route path={`${path}/edit`}>
+                    <div>edit</div>
+                  </Route>
+                </Switch>
+              );
+            }}
+          />
         </Switch>
       </div>
     </BrowserRouter>

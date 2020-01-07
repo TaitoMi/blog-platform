@@ -1,25 +1,21 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Button } from 'antd';
 import { formatDistance } from 'date-fns';
 import { ru } from 'date-fns/locale';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const Article = ({
-  title,
-  body,
-  favoritesCount,
-  author,
-  createdAt,
-  favorited,
-  tagList,
-  isAuthorized,
-  redirect,
-}) => {
+const SingleArticle = ({ articles, isAuthorized, slug }) => {
+  const article = articles.filter(el => el.slug === slug)[0];
+  const { title, body, favoritesCount, author, createdAt, favorited, tagList } = article;
   const isLike = favorited ? 'dislike' : 'like';
+
+  const like = () => {
+    console.log('ku');
+  };
+
   return (
-    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-    <div onClick={redirect} onKeyUp={redirect} role="article" className="articles__item article">
+    <article>
       <h1 className="article__title">{title}</h1>
       <div className="article__body">{body}</div>
       {tagList.length > 0 ? (
@@ -37,14 +33,7 @@ const Article = ({
       <div className="article__meta">
         <div className="article__likes">
           {isAuthorized ? (
-            <Button
-              className="article__likeBtn"
-              onClick={event => {
-                console.log('like');
-                event.stopPropagation();
-              }}
-              icon={isLike}
-            >
+            <Button className="article__likeBtn" onClick={like} icon={isLike}>
               {isLike}
             </Button>
           ) : null}
@@ -61,34 +50,27 @@ const Article = ({
           </span>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 
-Article.defaultProps = {
-  title: '',
-  body: '',
-  favoritesCount: 0,
-  createdAt: '',
-  favorited: null,
+SingleArticle.defaultProps = {
+  articles: [],
   isAuthorized: null,
-  author: null,
-  tagList: [],
-  redirect: null,
+  slug: '',
 };
 
-Article.propTypes = {
-  title: PropTypes.string,
-  body: PropTypes.string,
-  favoritesCount: PropTypes.number,
-  createdAt: PropTypes.string,
-  favorited: PropTypes.bool,
+SingleArticle.propTypes = {
+  articles: PropTypes.arrayOf(PropTypes.object),
   isAuthorized: PropTypes.bool,
-  author: PropTypes.objectOf(PropTypes.string),
-  tagList: PropTypes.arrayOf(PropTypes.string),
-  redirect: PropTypes.func,
+  slug: PropTypes.string,
 };
 
-const mapStateToProps = state => ({ isAuthorized: state.user.isAuthorized });
+const mapStateToProps = state => {
+  return {
+    articles: state.articles.articles,
+    isAuthorized: state.user.isAuthorized,
+  };
+};
 
-export default connect(mapStateToProps)(Article);
+export default connect(mapStateToProps)(SingleArticle);
