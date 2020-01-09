@@ -71,7 +71,7 @@ class MainPage extends React.Component {
 }
 
 MainPage.defaultProps = {
-  id: '',
+  id: null,
   email: '',
   username: '',
   exit: null,
@@ -80,7 +80,7 @@ MainPage.defaultProps = {
 };
 
 MainPage.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.number,
   email: PropTypes.string,
   username: PropTypes.string,
   exit: PropTypes.func,

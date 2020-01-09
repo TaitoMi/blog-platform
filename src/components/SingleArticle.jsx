@@ -4,18 +4,24 @@ import { formatDistance } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { NavLink } from 'react-router-dom';
+import * as actions from '../actions/actions';
 
-const SingleArticle = ({ articles, isAuthorized, slug }) => {
+const SingleArticle = ({ articles, isAuthorized, slug, likeOrDislike, token }) => {
   const article = articles.filter(el => el.slug === slug)[0];
   const { title, body, favoritesCount, author, createdAt, favorited, tagList } = article;
   const isLike = favorited ? 'dislike' : 'like';
 
-  const like = () => {
-    console.log('ku');
-  };
+  const likeHandler = () => likeOrDislike(favorited, slug, token);
 
   return (
     <article>
+      {isAuthorized ? (
+        <NavLink to={`/articles/${slug}/edit`}>
+          <Button type="normal">Редактировать</Button>
+        </NavLink>
+      ) : null}
       <h1 className="article__title">{title}</h1>
       <div className="article__body">{body}</div>
       {tagList.length > 0 ? (
@@ -33,7 +39,7 @@ const SingleArticle = ({ articles, isAuthorized, slug }) => {
       <div className="article__meta">
         <div className="article__likes">
           {isAuthorized ? (
-            <Button className="article__likeBtn" onClick={like} icon={isLike}>
+            <Button className="article__likeBtn" onClick={likeHandler} icon={isLike}>
               {isLike}
             </Button>
           ) : null}
@@ -58,19 +64,31 @@ SingleArticle.defaultProps = {
   articles: [],
   isAuthorized: null,
   slug: '',
+  likeOrDislike: null,
+  token: '',
 };
 
 SingleArticle.propTypes = {
   articles: PropTypes.arrayOf(PropTypes.object),
   isAuthorized: PropTypes.bool,
   slug: PropTypes.string,
+  likeOrDislike: PropTypes.func,
+  token: PropTypes.string,
 };
 
 const mapStateToProps = state => {
   return {
     articles: state.articles.articles,
     isAuthorized: state.user.isAuthorized,
+    token: state.user.token,
   };
 };
 
-export default connect(mapStateToProps)(SingleArticle);
+const mapDispatchToProps = dispatch => {
+  const { likeOrDislike } = bindActionCreators(actions, dispatch);
+  return {
+    likeOrDislike,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleArticle);

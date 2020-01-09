@@ -11,7 +11,6 @@ const createArticle = (values, token) => async dispatch => {
   });
   if (response.ok) {
     const action = await response.json().then(el => {
-      console.log(el);
       return {
         type: 'CREATE_ARTICLE',
         payload: { ...el },
@@ -19,7 +18,6 @@ const createArticle = (values, token) => async dispatch => {
     });
     return dispatch(action);
   }
-
   return 'ku';
 };
 

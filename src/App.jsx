@@ -11,6 +11,7 @@ import Header from './components/Header';
 import MainPage from './components/MainPage';
 import CreateArticle from './components/CreateArticle';
 import SingleArticle from './components/SingleArticle';
+import ArticleEdit from './components/ArticleEdit';
 
 const App = props => {
   const { isAuthorized } = props;
@@ -34,7 +35,7 @@ const App = props => {
                     <SingleArticle {...params} />
                   </Route>
                   <Route path={`${path}/edit`}>
-                    <div>edit</div>
+                    <ArticleEdit {...params} />
                   </Route>
                 </Switch>
               );

@@ -4,6 +4,8 @@ import { Button } from 'antd';
 import { formatDistance } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import * as actions from '../actions/actions';
 
 const Article = ({
   title,
@@ -15,8 +17,16 @@ const Article = ({
   tagList,
   isAuthorized,
   redirect,
+  likeOrDislike,
+  slug,
+  token,
 }) => {
   const isLike = favorited ? 'dislike' : 'like';
+  const likeHandler = event => {
+    event.stopPropagation();
+    likeOrDislike(favorited, slug, token);
+  };
+
   return (
     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <div onClick={redirect} onKeyUp={redirect} role="article" className="articles__item article">
@@ -37,14 +47,7 @@ const Article = ({
       <div className="article__meta">
         <div className="article__likes">
           {isAuthorized ? (
-            <Button
-              className="article__likeBtn"
-              onClick={event => {
-                console.log('like');
-                event.stopPropagation();
-              }}
-              icon={isLike}
-            >
+            <Button className="article__likeBtn" onClick={likeHandler} icon={isLike}>
               {isLike}
             </Button>
           ) : null}
@@ -75,6 +78,9 @@ Article.defaultProps = {
   author: null,
   tagList: [],
   redirect: null,
+  likeOrDislike: null,
+  slug: '',
+  token: '',
 };
 
 Article.propTypes = {
@@ -84,11 +90,26 @@ Article.propTypes = {
   createdAt: PropTypes.string,
   favorited: PropTypes.bool,
   isAuthorized: PropTypes.bool,
-  author: PropTypes.objectOf(PropTypes.string),
+  author: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.bool])),
   tagList: PropTypes.arrayOf(PropTypes.string),
   redirect: PropTypes.func,
+  likeOrDislike: PropTypes.func,
+  slug: PropTypes.string,
+  token: PropTypes.string,
 };
 
-const mapStateToProps = state => ({ isAuthorized: state.user.isAuthorized });
+const mapStateToProps = state => {
+  return {
+    isAuthorized: state.user.isAuthorized,
+    token: state.user.token,
+  };
+};
 
-export default connect(mapStateToProps)(Article);
+const mapDispatchToProps = dispatch => {
+  const { likeOrDislike } = bindActionCreators(actions, dispatch);
+  return {
+    likeOrDislike,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Article);
