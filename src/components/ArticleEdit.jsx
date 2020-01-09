@@ -22,7 +22,8 @@ const ArticleEdit = ({ articles, isAuthorized, slug, token, updateArticle }) => 
         if (!isAuthorized) {
           alert('Необходима авторизация');
         }
-        console.log(values, token, updateArticle);
+        // console.log(values, token, updateArticle);
+        updateArticle(values, slug, token);
         // const newValues = { ...values, tagList: values.tagList.filter(el => el !== '') };
       }}
     >
