@@ -17,8 +17,8 @@ class MainPage extends React.Component {
   }
 
   componentDidMount() {
-    const { getArticles } = this.props;
-    getArticles();
+    const { getArticles, token } = this.props;
+    getArticles(token);
   }
 
   pageHandler = page => {
@@ -77,6 +77,7 @@ MainPage.defaultProps = {
   exit: null,
   getArticles: null,
   articles: [],
+  token: '',
 };
 
 MainPage.propTypes = {
@@ -86,6 +87,7 @@ MainPage.propTypes = {
   exit: PropTypes.func,
   getArticles: PropTypes.func,
   articles: PropTypes.arrayOf(PropTypes.object),
+  token: PropTypes.string,
 };
 
 const mapStateToProps = state => {

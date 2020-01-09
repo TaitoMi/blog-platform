@@ -1,7 +1,8 @@
-const getArticles = () => async dispatch => {
+const getArticles = token => async dispatch => {
   const response = await fetch('https://conduit.productionready.io/api/articles/?limit=100', {
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Token ${token}`,
     },
   });
   const action = await response.json().then(articles => {
