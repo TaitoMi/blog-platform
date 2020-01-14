@@ -3,7 +3,7 @@ import 'normalize.css';
 import 'antd/dist/antd.css';
 import './styles/styles.scss';
 import PropTypes from 'prop-types';
-import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
@@ -13,15 +13,13 @@ import CreateArticle from './components/CreateArticle';
 import SingleArticle from './components/SingleArticle';
 import ArticleEdit from './components/ArticleEdit';
 
-const App = props => {
-  const { isAuthorized } = props;
-  const render = () => (!isAuthorized ? <Redirect to="/login" /> : <MainPage />);
+const App = () => {
   return (
     <BrowserRouter>
       <Header />
       <div className="App">
         <Switch>
-          <Route exact path="/" render={render} />
+          <Route exact path="/" component={MainPage} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
           <Route path="/add" component={CreateArticle} />

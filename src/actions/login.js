@@ -20,6 +20,7 @@ const login = ({ email, password }) => async dispatch => {
         },
       };
     });
+    localStorage.setItem('user', JSON.stringify({ email, password }));
     return dispatch(action);
   }
   const action = await response.json().then(() => {

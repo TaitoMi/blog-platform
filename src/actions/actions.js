@@ -9,4 +9,7 @@ export { registration, login, createArticle, getArticles, likeOrDislike, updateA
 
 export const clear = () => ({ type: 'ERROR_CLEAR' });
 
-export const exit = () => ({ type: 'LOGIN_EXIT' });
+export const exit = () => {
+  localStorage.clear();
+  return { type: 'LOGIN_EXIT' };
+};
