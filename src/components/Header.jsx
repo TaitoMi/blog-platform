@@ -11,7 +11,7 @@ const Header = ({ isAuthorized, clear }) => {
   const NavBar = isAuthorized ? (
     <div className="header__right">
       <NavLink to="/">
-        <Button type="primary">Личный кабинет</Button>
+        <Button type="primary">Главная</Button>
       </NavLink>
     </div>
   ) : (
