@@ -9,16 +9,13 @@ const createArticle = (values, token) => async dispatch => {
       article: { ...values },
     }),
   });
-  if (response.ok) {
-    const action = await response.json().then(el => {
-      return {
-        type: 'CREATE_ARTICLE',
-        payload: { ...el },
-      };
-    });
-    return dispatch(action);
-  }
-  return 'ku';
+  const action = await response.json().then(el => {
+    return {
+      type: 'CREATE_ARTICLE',
+      payload: { ...el },
+    };
+  });
+  return dispatch(action);
 };
 
 export default createArticle;

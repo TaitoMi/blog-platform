@@ -9,7 +9,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Header from './components/Header';
 import MainPage from './components/MainPage';
-import CreateArticle from './components/CreateArticle';
+import CreateArticle from './components/ArticleCreate';
 import SingleArticle from './components/SingleArticle';
 import ArticleEdit from './components/ArticleEdit';
 

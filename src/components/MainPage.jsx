@@ -56,9 +56,10 @@ class MainPage extends React.Component {
           {token ? (
             <aside className="user">
               <div className="user__info">
-                <div className="user__row">id: {id}</div>
-                <div className="user__row">email: {email}</div>
-                <div className="user__row">username: {username}</div>
+                <div className="user__row">
+                  {username} #{id}
+                </div>
+                <div className="user__row">{email}</div>
               </div>
               <div className="user__buttons">
                 <NavLink to="/add">

@@ -5,6 +5,7 @@ import { formatDistance } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
+import { NavLink } from 'react-router-dom';
 import * as actions from '../actions/actions';
 
 const Article = ({
@@ -16,7 +17,6 @@ const Article = ({
   favorited,
   tagList,
   isAuthorized,
-  redirect,
   likeOrDislike,
   slug,
   token,
@@ -28,8 +28,7 @@ const Article = ({
   };
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-    <div onClick={redirect} onKeyUp={redirect} role="article" className="articles__item article">
+    <div className="articles__item article">
       <h1 className="article__title">{title}</h1>
       <div className="article__body">{body}</div>
       {tagList.length > 0 ? (
@@ -47,12 +46,17 @@ const Article = ({
       <div className="article__meta">
         <div className="article__likes">
           {isAuthorized ? (
-            <Button className="article__likeBtn" onClick={likeHandler} icon={isLike}>
+            <Button className="article__like-btn" onClick={likeHandler} icon={isLike}>
               {isLike}
             </Button>
-          ) : null}
+          ) : (
+            'Likes '
+          )}
           {favoritesCount}
         </div>
+        <NavLink to={`/articles/${slug}`}>
+          <Button type="normal">Подробнее</Button>
+        </NavLink>
         <div className="article__created">
           <span className="article__author">Автор: {author.username}</span>
           <span className="article__date">
@@ -77,7 +81,6 @@ Article.defaultProps = {
   isAuthorized: null,
   author: null,
   tagList: [],
-  redirect: null,
   likeOrDislike: null,
   slug: '',
   token: '',
@@ -92,7 +95,6 @@ Article.propTypes = {
   isAuthorized: PropTypes.bool,
   author: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.bool])),
   tagList: PropTypes.arrayOf(PropTypes.string),
-  redirect: PropTypes.func,
   likeOrDislike: PropTypes.func,
   slug: PropTypes.string,
   token: PropTypes.string,

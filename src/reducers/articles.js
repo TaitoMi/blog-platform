@@ -3,9 +3,6 @@ const initialState = {
   articlesCount: 0,
 };
 
-let currArticles = [];
-let index;
-
 const articles = (state = initialState, action) => {
   switch (action.type) {
     case 'CREATE_ARTICLE':
@@ -19,15 +16,17 @@ const articles = (state = initialState, action) => {
         articlesCount: action.payload.articles.articlesCount,
       };
     case 'LIKE':
-      currArticles = [...state.articles];
-      index = currArticles.findIndex(el => el.slug === action.payload.article.slug);
-      currArticles[index] = {
-        ...action.payload.article,
-        favoritesCount: action.payload.article.favoritesCount,
-        favorited: action.payload.article.favorited,
-      };
       return {
-        articles: [...currArticles],
+        articles: state.articles.map(el => {
+          if (el.slug === action.payload.article.slug) {
+            return {
+              ...action.payload.article,
+              favoritesCount: action.payload.article.favoritesCount,
+              favorited: action.payload.article.favorited,
+            };
+          }
+          return el;
+        }),
         articlesCount: state.articlesCount,
       };
     default:

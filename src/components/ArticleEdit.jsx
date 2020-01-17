@@ -22,9 +22,7 @@ const ArticleEdit = ({ articles, isAuthorized, slug, token, updateArticle }) => 
         if (!isAuthorized) {
           alert('Необходима авторизация');
         }
-        // console.log(values, token, updateArticle);
         updateArticle(values, slug, token);
-        // const newValues = { ...values, tagList: values.tagList.filter(el => el !== '') };
       }}
     >
       {({ values, errors, touched, handleChange, handleBlur }) => (
@@ -62,9 +60,8 @@ const ArticleEdit = ({ articles, isAuthorized, slug, token, updateArticle }) => 
               <>
                 <div className="form__row-tags">
                   {values.tagList.map((tag, index) => {
-                    const newIndex = `tag-${index}`;
                     return (
-                      <div key={newIndex} className="form__row">
+                      <div key={tag} className="form__row">
                         <Input
                           className="form__tag"
                           placeholder="Введите тэг"

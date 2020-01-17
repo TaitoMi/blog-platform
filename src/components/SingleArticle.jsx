@@ -8,16 +8,24 @@ import { bindActionCreators } from 'redux';
 import { NavLink } from 'react-router-dom';
 import * as actions from '../actions/actions';
 
-const SingleArticle = ({ articles, isAuthorized, slug, likeOrDislike, token }) => {
+const SingleArticle = ({ articles, isAuthorized, slug, likeOrDislike, token, currUser }) => {
   const article = articles.filter(el => el.slug === slug)[0];
-  const { title, body, favoritesCount, author, createdAt, favorited, tagList } = article;
+  const {
+    title,
+    body,
+    favoritesCount,
+    author,
+    createdAt,
+    favorited,
+    tagList,
+    author: { username },
+  } = article;
   const isLike = favorited ? 'dislike' : 'like';
 
   const likeHandler = () => likeOrDislike(favorited, slug, token);
-
   return (
     <article>
-      {isAuthorized ? (
+      {isAuthorized && currUser === username ? (
         <NavLink to={`/articles/${slug}/edit`}>
           <Button type="normal">Редактировать</Button>
         </NavLink>
@@ -42,7 +50,9 @@ const SingleArticle = ({ articles, isAuthorized, slug, likeOrDislike, token }) =
             <Button className="article__likeBtn" onClick={likeHandler} icon={isLike}>
               {isLike}
             </Button>
-          ) : null}
+          ) : (
+            'Likes '
+          )}
           {favoritesCount}
         </div>
         <div className="article__created">
@@ -66,6 +76,7 @@ SingleArticle.defaultProps = {
   slug: '',
   likeOrDislike: null,
   token: '',
+  currUser: '',
 };
 
 SingleArticle.propTypes = {
@@ -74,6 +85,7 @@ SingleArticle.propTypes = {
   slug: PropTypes.string,
   likeOrDislike: PropTypes.func,
   token: PropTypes.string,
+  currUser: PropTypes.string,
 };
 
 const mapStateToProps = state => {
@@ -81,6 +93,7 @@ const mapStateToProps = state => {
     articles: state.articles.articles,
     isAuthorized: state.user.isAuthorized,
     token: state.user.token,
+    currUser: state.user.username,
   };
 };
 

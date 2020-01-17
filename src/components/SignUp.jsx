@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Input } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
@@ -28,6 +28,10 @@ const SignUp = ({ isSuccessful, error, clear, registration }) => {
     registration(userData);
   };
 
+  const history = useHistory();
+  if (isSuccessful) {
+    history.push('/login');
+  }
   return (
     <Formik
       initialValues={{
@@ -36,7 +40,7 @@ const SignUp = ({ isSuccessful, error, clear, registration }) => {
         email: '',
       }}
       validationSchema={validationSchema}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={async (values, { setSubmitting }) => {
         setSubmitting(isSuccessful);
         registrationHandler(values);
       }}
